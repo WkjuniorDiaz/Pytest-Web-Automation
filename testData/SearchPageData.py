@@ -1,3 +1,3 @@
 class SearchPageData:
 
-    test_searchPage_data = [{"origin": "lima","destination": "buenos aires"}]
+    test_searchPage_data = [{"origin": "Lima", "destination": "Santiago de Chile", "departureDate": "31 de agosto de 2024", "arrivalDate": "20 de septiembre de 2024", "destinationRate": "Basic"}]

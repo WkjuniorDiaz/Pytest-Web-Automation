@@ -12,7 +12,7 @@ def pytest_addoption(parser):
     )
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture()
 def setup(request):
     global driver
     browser_name = request.config.getoption("browser_name")
@@ -26,7 +26,7 @@ def setup(request):
     driver.maximize_window()
     request.cls.driver = driver
     yield
-    driver.close()
+    driver.quit()
 
 
 @pytest.fixture(params=SearchPageData.test_searchPage_data)

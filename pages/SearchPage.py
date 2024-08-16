@@ -34,6 +34,7 @@ class SearchPage():
         list_opt = self.driver.find_elements(*SearchPage.country_opt_locator)
 
         for element in list_opt:
+            SearchPage.wait.until(expected_conditions.visibility_of(element))
             if country in element.text:
                 element.click()
                 break

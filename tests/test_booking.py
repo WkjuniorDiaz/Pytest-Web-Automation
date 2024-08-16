@@ -1,3 +1,5 @@
+import time
+
 from pages.FlightPage import FlightPage
 from pages.SearchPage import SearchPage
 from utilities.BaseClass import BaseClass
@@ -35,6 +37,7 @@ class TestBooking(BaseClass):
         destination = getData["destination"]
         departure_date = getData["departureDate"]
         arrival_date = getData["arrivalDate"]
+        origin_rate = getData["originRate"]
         destination_rate = getData["destinationRate"]
 
         search_page.select_origin(origin)
@@ -45,5 +48,9 @@ class TestBooking(BaseClass):
 
         flight_page.switchWindow()
         flight_page.select_origin_flight()
-        flight_page.select_destination_flight(destination_rate)
+        flight_page.select_rate_of_flight(origin_rate)
+        print("---------------------")
+        flight_page.select_departure_flight()
+        print("//////////////////////")
+        flight_page.select_rate_of_flight(destination_rate)
 

@@ -1,7 +1,10 @@
 import time
 
+from pages.CustomizePage import CustomizePage
 from pages.FlightPage import FlightPage
+from pages.PassengersPage import PassengersPage
 from pages.SearchPage import SearchPage
+from pages.SeatsPage import SeatsPage
 from utilities.BaseClass import BaseClass
 
 
@@ -32,6 +35,9 @@ class TestBooking(BaseClass):
         log = self.getLogger()
         search_page = SearchPage(self.driver)
         flight_page = FlightPage(self.driver)
+        seats_page = SeatsPage(self.driver)
+        customize_page = CustomizePage(self.driver)
+        passengers_page = PassengersPage(self.driver)
 
         origin = getData["origin"]
         destination = getData["destination"]
@@ -49,8 +55,11 @@ class TestBooking(BaseClass):
         flight_page.switchWindow()
         flight_page.select_origin_flight()
         flight_page.select_rate_of_flight(origin_rate)
-        print("---------------------")
         flight_page.select_departure_flight()
-        print("//////////////////////")
         flight_page.select_rate_of_flight(destination_rate)
+        flight_page.select_continue_without_refundable()
+
+        seats_page.select_seats_later()
+
+        customize_page.select_continue()
 

@@ -13,6 +13,7 @@ class FlightPage():
     rates_option_locator = (By.XPATH,"//li[contains(@id,'WrapperBundleCardbundle-detail')]")
     allow_restriction_locator = (By.ID,"undefined-flight-select")
     origin_flight_info = (By.TAG_NAME,"strong")
+    continue_btn_locator = (By.ID,"button9")
 
     wait = None
     actions = None
@@ -33,7 +34,7 @@ class FlightPage():
         list_flight = self.driver.find_elements(*FlightPage.flights_options_locator)
 
         for index, element in enumerate(list_flight):
-            FlightPage.wait.until(expected_conditions.visibility_of(element))
+            FlightPage.wait.until(expected_conditions.visibility_of(element.find_element(By.XPATH, ".//div/div[2]")))
             if index == 0:
                 element.click()
                 break
@@ -60,3 +61,9 @@ class FlightPage():
                 break
 
         self.driver.find_element(*FlightPage.allow_restriction_locator).click()
+
+    def select_continue_without_refundable(self):
+        time.sleep(5)
+        continue_btn_element = self.driver.find_element(*FlightPage.continue_btn_locator)
+        FlightPage.actions.move_to_element(continue_btn_element).perform()
+        self.driver.find_element(*FlightPage.continue_btn_locator).click()

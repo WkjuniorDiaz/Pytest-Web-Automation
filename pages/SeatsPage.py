@@ -7,14 +7,12 @@ from selenium.webdriver.support import expected_conditions
 
 class SeatsPage:
 
-    select_seats_later_btn_locator = (By.ID,"btnSeatMapLeave")
+    select_seats_later_btn_locator = (By.ID, "btnSeatMapLeave")
 
-    wait = None
-
-    def __init__(self,driver):
+    def __init__(self, driver):
         self.driver = driver
-        wait = WebDriverWait(self.driver,10)
+        self.wait = WebDriverWait(self.driver, 15)
 
     def select_seats_later(self):
-        SeatsPage.wait.until(expected_conditions.visibility_of(self.driver.find_element(*SeatsPage.select_seats_later_btn_locator)))
+        self.wait.until(expected_conditions.element_to_be_clickable(SeatsPage.select_seats_later_btn_locator))
         self.driver.find_element(*SeatsPage.select_seats_later_btn_locator).click()

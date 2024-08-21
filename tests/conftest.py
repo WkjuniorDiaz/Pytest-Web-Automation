@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 
+from testData.PassengersPageData import PassengersPageData
 from testData.SearchPageData import SearchPageData
 
 driver = None
@@ -12,7 +13,7 @@ def pytest_addoption(parser):
     )
 
 
-@pytest.fixture()
+@pytest.fixture(scope="class")
 def setup(request):
     global driver
     browser_name = request.config.getoption("browser_name")
@@ -30,7 +31,12 @@ def setup(request):
 
 
 @pytest.fixture(params=SearchPageData.test_searchPage_data)
-def getData(request):
+def get_search_data(request):
+    return request.param
+
+
+@pytest.fixture(params=PassengersPageData.test_passengersPage_data)
+def get_passengers_data(request):
     return request.param
 
 

@@ -3,6 +3,7 @@ import time
 from pages.CustomizePage import CustomizePage
 from pages.FlightPage import FlightPage
 from pages.PassengersPage import PassengersPage
+from pages.PaymentPage import PaymentPage
 from pages.SearchPage import SearchPage
 from pages.SeatsPage import SeatsPage
 from utilities.BaseClass import BaseClass
@@ -25,7 +26,7 @@ class TestBooking(BaseClass):
         search_page.select_arrival_date(arrival_date)
         search_page.select_search()
 
-        flight_page.switchWindow()
+        flight_page.switch_window()
         flight_detail = flight_page.get_flight_info()
 
         assert origin in flight_detail and destination in flight_detail
@@ -53,6 +54,7 @@ class TestBooking(BaseClass):
 
     def test_fill_booking_details(self, get_search_data, get_passengers_data):
         passengers_page = PassengersPage(self.driver)
+        payment_page = PaymentPage(self.driver)
 
         first_name = get_passengers_data["firstName"]
         last_name = get_passengers_data["lastName"]
@@ -64,3 +66,6 @@ class TestBooking(BaseClass):
         number = get_passengers_data["number"]
 
         passengers_page.fill_passenger_information(first_name, last_name, date_birth, gender, nationality, document_id, email, number)
+        passengers_page.submit_booking(first_name)
+
+        assert payment_page.get_confirm_tile() in "Confirma y paga tu compra"

@@ -7,20 +7,19 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 class FlightPage():
-
-    flight_info_locator = (By.CSS_SELECTOR,"#SearchBoxDesktopCompacted div div")
-    flights_options_locator = (By.XPATH,"//div[contains(@id,'WrapperCardFlight')]")
-    rates_option_locator = (By.XPATH,"//li[contains(@id,'WrapperBundleCardbundle-detail')]")
-    allow_restriction_locator = (By.ID,"undefined-flight-select")
-    origin_flight_info = (By.TAG_NAME,"strong")
-    continue_btn_locator = (By.ID,"button9")
+    flight_info_locator = (By.CSS_SELECTOR, "#SearchBoxDesktopCompacted div div")
+    flights_options_locator = (By.XPATH, "//div[contains(@id,'WrapperCardFlight')]")
+    rates_option_locator = (By.XPATH, "//li[contains(@id,'WrapperBundleCardbundle-detail')]")
+    allow_restriction_locator = (By.ID, "undefined-flight-select")
+    origin_flight_info = (By.TAG_NAME, "strong")
+    continue_btn_locator = (By.ID, "button9")
 
     wait = None
     actions = None
 
-    def __init__(self,driver):
+    def __init__(self, driver):
         self.driver = driver
-        FlightPage.wait = WebDriverWait(self.driver,10)
+        FlightPage.wait = WebDriverWait(self.driver, 10)
         FlightPage.actions = ActionChains(self.driver)
 
     def switchWindow(self):
@@ -41,7 +40,8 @@ class FlightPage():
 
     def select_departure_flight(self):
         time.sleep(6)
-        FlightPage.wait.until(expected_conditions.visibility_of(self.driver.find_element(*FlightPage.origin_flight_info)))
+        FlightPage.wait.until(
+            expected_conditions.visibility_of(self.driver.find_element(*FlightPage.origin_flight_info)))
         list_flight = self.driver.find_elements(*FlightPage.flights_options_locator)
 
         for index, element in enumerate(list_flight):
@@ -55,7 +55,8 @@ class FlightPage():
 
         for element in list_rate:
             if rate_option in element.text:
-                button_element = element.find_element(By.XPATH, ".//div//div[contains(@class,'SelectContainer')]/button")
+                button_element = element.find_element(By.XPATH,
+                                                      ".//div//div[contains(@class,'SelectContainer')]/button")
                 FlightPage.actions.move_to_element(button_element).perform()
                 button_element.click()
                 break

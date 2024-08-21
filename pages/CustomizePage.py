@@ -10,7 +10,7 @@ class CustomizePage:
 
     def __init__(self,driver):
         self.driver = driver
-        wait = WebDriverWait(self.driver,10)
+        CustomizePage.wait = WebDriverWait(self.driver,10)
 
     def select_continue(self):
         CustomizePage.wait.until(expected_conditions.visibility_of(self.driver.find_element(*CustomizePage.continue_btn_locator)))

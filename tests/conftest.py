@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 
+from factories.PageFactory import PageFactory
 from testData.PassengersPageData import PassengersPageData
 from testData.SearchPageData import SearchPageData
 
@@ -26,8 +27,13 @@ def setup(request):
     driver.get("https://www.latamairlines.com/pe/es")
     driver.maximize_window()
     request.cls.driver = driver
-    yield
+    yield driver
     driver.quit()
+
+
+@pytest.fixture
+def page_factory(setup):
+    return PageFactory(setup)
 
 
 @pytest.fixture(params=SearchPageData.test_searchPage_data)

@@ -1,44 +1,19 @@
 import time
 
+from pages.FlightPage import FlightPage
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-class FlightPage:
-    flight_info_locator = (By.CSS_SELECTOR, "#SearchBoxDesktopCompacted div div")
-    flights_options_locator = (By.XPATH, "//div[contains(@id,'WrapperCardFlight')]")
-    rates_option_locator = (By.XPATH, "//li[contains(@id,'WrapperBundleCardbundle-detail')]")
-    allow_restriction_locator = (By.ID, "undefined-flight-select")
-    origin_flight_info = (By.TAG_NAME, "strong")
-    continue_btn_locator = (By.ID, "button9")
+class FlightsActions:
 
-    def __init__(self, driver):
+    def __init__(self, FlightPage, driver):
         self.driver = driver
+        self.flight_page = FlightPage
         self.wait = WebDriverWait(self.driver, 10)
         self.actions = ActionChains(self.driver)
-
-    def get_flight_info(self):
-        return self.driver.find_element(*FlightPage.flight_info_locator)
-
-    def get_flight_info_text(self):
-        return self.get_flight_info().text
-
-    def get_flight_options(self):
-        return self.driver.find_element(*FlightPage.flights_options_locator)
-
-    def get_rates_option(self):
-        return self.driver.find_element(*FlightPage.rates_option_locator)
-
-    def get_allow_restriction(self):
-        return self.driver.find_element(*FlightPage.allow_restriction_locator)
-
-    def get_origin_flight_info(self):
-        return self.driver.find_element(*FlightPage.origin_flight_info)
-
-    def get_continue_button(self):
-        return self.driver.find_element(*FlightPage.continue_btn_locator)
 
     def switch_window(self):
         new_windows_name = self.driver.window_handles
@@ -46,7 +21,7 @@ class FlightPage:
 
     def get_flight_info(self):
         self.wait.until(expected_conditions.visibility_of_element_located(FlightPage.flight_info_locator))
-        return self.driver.find_element(*FlightPage.flight_info_locator).text
+        return FlightPage.get_flight_info_text()
 
     def select_origin_flight(self):
         self.wait.until(expected_conditions.visibility_of_all_elements_located(FlightPage.flights_options_locator))
@@ -88,3 +63,4 @@ class FlightPage:
         continue_btn_element = self.driver.find_element(*FlightPage.continue_btn_locator)
         self.actions.move_to_element(continue_btn_element).perform()
         self.driver.find_element(*FlightPage.continue_btn_locator).click()
+

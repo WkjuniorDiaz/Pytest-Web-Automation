@@ -11,9 +11,9 @@ from utilities.BaseClass import BaseClass
 
 class TestBooking(BaseClass):
 
-    def test_search_flight(self, get_search_data):
-        search_page = SearchPage(self.driver)
-        flight_page = FlightPage(self.driver)
+    def test_search_flight(self, page_factory, get_search_data):
+        search_page = page_factory.get_page("search")
+        flight_page = page_factory.get_page("flight")
 
         origin = get_search_data["origin"]
         destination = get_search_data["destination"]
@@ -31,11 +31,11 @@ class TestBooking(BaseClass):
 
         assert origin in flight_detail and destination in flight_detail
 
-    def test_select_flight_and_proceed_to_booking(self, get_search_data):
-        flight_page = FlightPage(self.driver)
-        seats_page = SeatsPage(self.driver)
-        customize_page = CustomizePage(self.driver)
-        passengers_page = PassengersPage(self.driver)
+    def test_select_flight_and_proceed_to_booking(self, page_factory, get_search_data):
+        flight_page = page_factory.get_page("flight")
+        seats_page = page_factory.get_page("seats")
+        customize_page = page_factory.get_page("customize")
+        passengers_page = page_factory.get_page("passengers")
 
         origin_rate = get_search_data["originRate"]
         destination_rate = get_search_data["destinationRate"]
@@ -52,9 +52,9 @@ class TestBooking(BaseClass):
 
         assert "Pasajeros" in passengers_page.get_title()
 
-    def test_fill_booking_details(self, get_search_data, get_passengers_data):
-        passengers_page = PassengersPage(self.driver)
-        payment_page = PaymentPage(self.driver)
+    def test_fill_booking_details(self, page_factory, get_search_data, get_passengers_data):
+        passengers_page = page_factory.get_page("passengers")
+        payment_page = page_factory.get_page("payment")
 
         first_name = get_passengers_data["firstName"]
         last_name = get_passengers_data["lastName"]
